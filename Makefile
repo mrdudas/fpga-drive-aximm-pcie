@@ -1,4 +1,4 @@
-# Opsero Electronic Design Inc. 2024
+# Opsero Electronic Design Inc. 2025
 #
 # This Makefile can be used to build all projects and gather the boot images.
 
@@ -30,7 +30,6 @@ vhk158_target := versal both
 vmk180_fmcp1_target := versal both
 vmk180_fmcp2_target := versal both
 vek280_target := versal both
-vek280_es_revb_target := versal both
 vpk120_target := versal both
 vpk180_target := versal both
 vcu118_target := microblaze baremetal_only
@@ -75,8 +74,8 @@ VIT_BOOT_TARG = $(VIT_BOOT)/$(TARGET)
 # outputs
 BOOTIMAGE_DIR = $(ROOT_DIR)/bootimages
 TEMPBOOT_DIR = $(BOOTIMAGE_DIR)/$(BD_NAME)_$(TARGET)
-PETL_ZIP = $(BOOTIMAGE_DIR)/$(BD_NAME)_$(TARGET)_petalinux-2024-1.zip
-BARE_ZIP = $(BOOTIMAGE_DIR)/$(BD_NAME)_$(TARGET)_standalone-2024-1.zip
+PETL_ZIP = $(BOOTIMAGE_DIR)/$(BD_NAME)_$(TARGET)_petalinux-2025-2.zip
+BARE_ZIP = $(BOOTIMAGE_DIR)/$(BD_NAME)_$(TARGET)_standalone-2025-2.zip
 BOOTIMAGE_LOCK = $(ROOT_DIR)/.$(TARGET).lock
 
 # These macros return values from the valid target lists defined above

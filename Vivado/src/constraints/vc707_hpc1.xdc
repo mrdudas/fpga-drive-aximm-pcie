@@ -27,10 +27,10 @@ create_clock -period 10.000 -name ref_clk_0_clk_p -waveform {0.000 5.000} [get_p
 # SSD1 Gigabit transceivers
 ############################
 
-set_property LOC GTXE2_CHANNEL_X1Y24 [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ IO.GT.GTXE2_CHANNEL && NAME =~ "*axi_pcie_0*pipe_lane[0]*" }]
-set_property LOC GTXE2_CHANNEL_X1Y25 [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ IO.GT.GTXE2_CHANNEL && NAME =~ "*axi_pcie_0*pipe_lane[1]*" }]
-set_property LOC GTXE2_CHANNEL_X1Y26 [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ IO.GT.GTXE2_CHANNEL && NAME =~ "*axi_pcie_0*pipe_lane[2]*" }]
-set_property LOC GTXE2_CHANNEL_X1Y27 [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ IO.GT.GTXE2_CHANNEL && NAME =~ "*axi_pcie_0*pipe_lane[3]*" }]
+set_property LOC GTXE2_CHANNEL_X1Y24 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE == IO.GT.GTXE2_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~ ".*pipe_lane\[0\].*" }]
+set_property LOC GTXE2_CHANNEL_X1Y25 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE == IO.GT.GTXE2_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~ ".*pipe_lane\[1\].*" }]
+set_property LOC GTXE2_CHANNEL_X1Y26 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE == IO.GT.GTXE2_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~ ".*pipe_lane\[2\].*" }]
+set_property LOC GTXE2_CHANNEL_X1Y27 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE == IO.GT.GTXE2_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~ ".*pipe_lane\[3\].*" }]
 
 ############################
 # SSD1 PCIe block

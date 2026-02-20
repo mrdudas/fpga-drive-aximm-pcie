@@ -343,24 +343,6 @@
       "flashintf": "0"
     },
     {
-      "publish": false,
-      "label": "vek280_es_revb",
-      "board": "VEK280 ES Rev-B",
-      "link": "https://www.xilinx.com/vek280",
-      "url": "xilinx.com",
-      "boardname": "vek280_es_revb",
-      "ip": "qdma",
-      "lanes": ["X4","X4"],
-      "ports": "SSD1 & SSD2",
-      "connector": "FMCP",
-      "group": "versal",
-      "petalinux": true,
-      "baremetal": true,
-      "license": true,
-      "flashsize": "0",
-      "flashintf": "0"
-    },
-    {
       "publish": true,
       "label": "vpk120",
       "board": "VPK120",

@@ -54,7 +54,6 @@ dict set target_dict vhk158 { vhk158 }
 dict set target_dict vmk180_fmcp1 { vmk180 }
 dict set target_dict vmk180_fmcp2 { vmk180 }
 dict set target_dict vek280 { vek280 }
-dict set target_dict vek280_es_revb { vek280_es_revb }
 dict set target_dict vpk120 { vpk120 }
 dict set target_dict vpk180 { vpk180 }
 dict set target_dict vcu118 { vcu118 }

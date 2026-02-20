@@ -27,7 +27,7 @@ create_clock -period 10.000 -name ref_clk_0_clk_p -waveform {0.000 5.000} [get_p
 # SSD1 Gigabit transceivers
 ############################
 
-set_property LOC GTHE3_CHANNEL_X0Y8 [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ ADVANCED.GT.GTHE3_CHANNEL && NAME =~ "*axi_pcie_0*channel_inst[0]*" }]
+set_property LOC GTHE3_CHANNEL_X0Y8 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE =~ ADVANCED.GT.GTHE3_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~ ".*channel_inst\[0\].*" }]
 
 ############################
 # SSD1 PCIe block

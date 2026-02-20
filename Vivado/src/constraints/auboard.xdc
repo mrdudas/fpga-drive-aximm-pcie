@@ -27,10 +27,10 @@ create_clock -period 10.000 -name ref_clk_0_clk_p -waveform {0.000 5.000} [get_p
 # SSD1 Gigabit transceivers
 ############################
 
-set_property LOC GTHE4_CHANNEL_X0Y4 [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ ADVANCED.GT.GTHE4_CHANNEL && NAME =~ "*axi_pcie_0*channel_inst[0]*" }]
-set_property LOC GTHE4_CHANNEL_X0Y5 [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ ADVANCED.GT.GTHE4_CHANNEL && NAME =~ "*axi_pcie_0*channel_inst[1]*" }]
-set_property LOC GTHE4_CHANNEL_X0Y6 [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ ADVANCED.GT.GTHE4_CHANNEL && NAME =~ "*axi_pcie_0*channel_inst[2]*" }]
-set_property LOC GTHE4_CHANNEL_X0Y7 [get_cells -hierarchical -filter { PRIMITIVE_TYPE =~ ADVANCED.GT.GTHE4_CHANNEL && NAME =~ "*axi_pcie_0*channel_inst[3]*" }]
+set_property LOC GTHE4_CHANNEL_X0Y4 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE == ADVANCED.GT.GTHE4_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~  ".*gen_gthe4_channel_inst\[0\].*" } ]
+set_property LOC GTHE4_CHANNEL_X0Y5 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE == ADVANCED.GT.GTHE4_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~  ".*gen_gthe4_channel_inst\[1\].*" } ]
+set_property LOC GTHE4_CHANNEL_X0Y6 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE == ADVANCED.GT.GTHE4_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~  ".*gen_gthe4_channel_inst\[2\].*" } ]
+set_property LOC GTHE4_CHANNEL_X0Y7 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE == ADVANCED.GT.GTHE4_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~  ".*gen_gthe4_channel_inst\[3\].*" } ]
 
 ############################
 # SSD1 PCIe block

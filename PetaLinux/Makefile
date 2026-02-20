@@ -22,7 +22,6 @@ vhk158_target := versal 0 0
 vmk180_fmcp1_target := versal 0 0
 vmk180_fmcp2_target := versal 0 0
 vek280_target := versal 0 0
-vek280_es_revb_target := versal 0 0
 vpk120_target := versal 0 0
 vpk180_target := versal 0 0
 zc706_hpc_target := zynq 0 0

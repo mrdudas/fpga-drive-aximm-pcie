@@ -441,27 +441,14 @@ for {set i 0} {$i < [llength $num_lanes]} {incr i} {
   # Connect PCIe core resets
   if {$pcie_ip == "axi_pcie"} {
     connect_bd_net $system_rst [get_bd_pins axi_pcie_$i/axi_aresetn]
-    # Automation will create proc system reset rst_axi_pcie_0_125M and use the peripheral_aresetn to drive
-    # axi_mem_intercon and microblaze_0_axi_periph ARESETN for all 3 AXI PCIe interfaces: M_AXI, S_AXI and S_AXI_CTL
-    # We created another proc system reset for the axi_ctl_aclk_out clock and use its output to drive the ARESETN 
-    # of the S_AXI_CTL interface
-    connect_bd_net $system_rst [get_bd_pins rst_axi_pcie_${i}_125M/ext_reset_in]
-    connect_bd_net [get_bd_pins axi_pcie_$i/mmcm_lock] [get_bd_pins rst_axi_pcie_${i}_125M/dcm_locked]
     # Add proc system reset to drive M0X_ARESETN
     create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset rst_pcie_axi_ctl_aclk_$i
     connect_bd_net [get_bd_pins axi_pcie_$i/axi_ctl_aclk_out] [get_bd_pins rst_pcie_axi_ctl_aclk_$i/slowest_sync_clk]
     connect_bd_net $system_rst [get_bd_pins rst_pcie_axi_ctl_aclk_$i/ext_reset_in]
     connect_bd_net [get_bd_pins axi_pcie_$i/mmcm_lock] [get_bd_pins rst_pcie_axi_ctl_aclk_$i/dcm_locked]
-    # Disconnect M0X_ARESETN and connect the correct one
-    disconnect_bd_net /rst_axi_pcie_${i}_125M_peripheral_aresetn [get_bd_pins microblaze_0_axi_periph/M0${reset_index}_ARESETN]
-    connect_bd_net [get_bd_pins rst_pcie_axi_ctl_aclk_$i/peripheral_aresetn] [get_bd_pins microblaze_0_axi_periph/M0${reset_index}_ARESETN]
     
   } else {
     connect_bd_net $system_rst [get_bd_pins axi_pcie_$i/sys_rst_n]
-    # Automation will connect ARESETN of the S_AXI_CTL interface to the wrong reset signal (axi_aresetn)
-    # so we need to disconnect it and connect it to the correct one: axi_ctl_aresetn
-    disconnect_bd_net /axi_pcie_${i}_axi_aresetn [get_bd_pins microblaze_0_axi_periph/M0${reset_index}_ARESETN]
-    connect_bd_net [get_bd_pins axi_pcie_$i/axi_ctl_aresetn] [get_bd_pins microblaze_0_axi_periph/M0${reset_index}_ARESETN]
   }
 
   # Create PERST output port
@@ -491,7 +478,11 @@ if {[llength $num_lanes] > 1} {
 # Add UART
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uart16550 axi_uart16550_0
 apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {Auto} Clk_slave {Auto} Clk_xbar {Auto} Master {/microblaze_0 (Periph)} Slave {/axi_uart16550_0/S_AXI} ddr_seg {Auto} intc_ip {/microblaze_0_axi_periph} master_apm {0}}  [get_bd_intf_pins axi_uart16550_0/S_AXI]
-apply_bd_automation -rule xilinx.com:bd_rule:board -config { Board_Interface {rs232_uart ( UART ) } Manual_Source {Auto}}  [get_bd_intf_pins axi_uart16550_0/UART]
+if {$board_name == "auboard_15p"} {
+  apply_bd_automation -rule xilinx.com:bd_rule:board -config { Board_Interface {sys_uart ( System UART ) } Manual_Source {Auto}}  [get_bd_intf_pins axi_uart16550_0/UART]
+} else {
+  apply_bd_automation -rule xilinx.com:bd_rule:board -config { Board_Interface {rs232_uart ( UART ) } Manual_Source {Auto}}  [get_bd_intf_pins axi_uart16550_0/UART]
+}
 append ints "axi_uart16550_0/ip2intc_irpt "
 
 # Add Timer

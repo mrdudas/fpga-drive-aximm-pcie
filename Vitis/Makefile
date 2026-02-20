@@ -33,7 +33,6 @@ vhk158_target := versal
 vmk180_fmcp1_target := versal
 vmk180_fmcp2_target := versal
 vek280_target := versal
-vek280_es_revb_target := versal
 vpk120_target := versal
 vpk180_target := versal
 vcu118_target := microblaze
