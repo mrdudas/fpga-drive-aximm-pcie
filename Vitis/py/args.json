@@ -1,0 +1,19 @@
+{
+    "bd_name": "fpgadrv",
+    "app_name": "ssd_test",
+    "app_template": "None",
+    "src": {
+        "mb": {"dir": "common/src", "files": ["pcie_enumerate.c"]},
+        "zynq": {"dir": "common/src", "files": ["pcie_enumerate.c"]},
+        "zynqmp": {"dir": "common/src", "files": ["xdmapcie_rc_enumerate_example.c"]},
+        "versal": {"dir": "common/src", "files": ["xdmapcie_rc_enumerate_example.c", "qdma_config.c"]}
+    },
+    "src_overrides": {
+        "auboard": {"dir": "common/src", "files": ["xdmapcie_rc_enumerate_example.c"]},
+        "vcu118": {"dir": "common/src", "files": ["xdmapcie_rc_enumerate_example.c"]}
+    },
+    "linker_script_mods": {
+        "microblaze": "relocate_to_local_mem"
+    },
+    "combine_bit_elf": true
+}
