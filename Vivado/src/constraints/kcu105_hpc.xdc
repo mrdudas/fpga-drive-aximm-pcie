@@ -40,12 +40,6 @@ create_clock -period 10.000 -name ref_clk_1_clk_p -waveform {0.000 5.000} [get_p
 # SSD1 Gigabit transceivers
 ############################
 
-# Suppress CRITICAL WARNING [Constraints 18-4427] for GT LOC overrides.
-# The PCIe IP sets default GT LOCs in its internal XDC. We override them
-# here for correct FMC connectivity. The IP GT XDC only contains LOC
-# constraints, so the override is safe.
-set_msg_config -id {Constraints 18-4427} -suppress
-
 set_property LOC GTHE3_CHANNEL_X0Y16 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE =~ ADVANCED.GT.GTHE3_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~ ".*channel_inst\[0\].*" }]
 set_property LOC GTHE3_CHANNEL_X0Y17 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE =~ ADVANCED.GT.GTHE3_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~ ".*channel_inst\[1\].*" }]
 set_property LOC GTHE3_CHANNEL_X0Y18 [get_cells -hierarchical -regexp -filter { PRIMITIVE_TYPE =~ ADVANCED.GT.GTHE3_CHANNEL && PARENT =~  ".*axi_pcie_0.*" && NAME =~ ".*channel_inst\[2\].*" }]

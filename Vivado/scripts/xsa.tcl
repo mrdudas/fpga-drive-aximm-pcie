@@ -66,6 +66,12 @@ set orig_proj_dir "[file normalize "$origin_dir/$design_name"]"
 # Open project
 open_project $origin_dir/$design_name/$design_name.xpr
 
+# Suppress CRITICAL WARNING [Constraints 18-4427] for GT LOC overrides.
+# The PCIe IP sets default GT LOCs in its internal XDC. We override them
+# in our constraints for correct FMC connectivity. The IP GT XDC only
+# contains LOC constraints, so the override is safe.
+set_msg_config -id {Constraints 18-4427} -suppress
+
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
 launch_runs impl_1 -jobs $jobs -to_step write_bitstream
