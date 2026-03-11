@@ -16,15 +16,14 @@
 #*****************************************************************************************
 
 # Check the version of Vivado used
-set version_required "2024.1"
-set version_also_allowed "2024.2"
+set versions_supported [list "2024.1" "2024.2"]
 set ver [lindex [split $::env(XILINX_VIVADO) /] end]
-if {![string equal $ver $version_required] && ![string equal $ver $version_also_allowed]} {
+if {[lsearch -exact $versions_supported $ver] < 0} {
   puts "###############################"
   puts "### Failed to build project ###"
   puts "###############################"
-  puts "This project was designed for use with Vivado $version_required."
-  puts "You are using Vivado $ver. Please install Vivado $version_required,"
+  puts "This project was designed for use with Vivado [join $versions_supported { or }]."
+  puts "You are using Vivado $ver. Please install a supported version ([join $versions_supported { or }]),"
   puts "or download the project sources from a commit of the Git repository"
   puts "that was intended for your version of Vivado ($ver)."
   return
