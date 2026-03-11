@@ -17,8 +17,9 @@
 
 # Check the version of Vivado used
 set version_required "2024.1"
+set version_also_allowed "2024.2"
 set ver [lindex [split $::env(XILINX_VIVADO) /] end]
-if {![string equal $ver $version_required]} {
+if {![string equal $ver $version_required] && ![string equal $ver $version_also_allowed]} {
   puts "###############################"
   puts "### Failed to build project ###"
   puts "###############################"
@@ -66,10 +67,36 @@ set orig_proj_dir "[file normalize "$origin_dir/$design_name"]"
 # Open project
 open_project $origin_dir/$design_name/$design_name.xpr
 
+# Generate wrapper if not already present
+set wrapper_file "$origin_dir/$design_name/${design_name}.srcs/sources_1/bd/${block_name}/${block_name}_wrapper.v"
+set wrapper_file_vhd "$origin_dir/$design_name/${design_name}.srcs/sources_1/bd/${block_name}/${block_name}_wrapper.vhd"
+if {![file exists $wrapper_file] && ![file exists $wrapper_file_vhd]} {
+  make_wrapper -files [get_files ${block_name}.bd] -top
+  set wrapper [glob -nocomplain "$origin_dir/$design_name/${design_name}.gen/sources_1/bd/${block_name}/hdl/${block_name}_wrapper.v"]
+  if {[llength $wrapper] == 0} {
+    set wrapper [glob -nocomplain "$origin_dir/$design_name/${design_name}.gen/sources_1/bd/${block_name}/hdl/${block_name}_wrapper.vhd"]
+  }
+  add_files -norecurse $wrapper
+  set_property top ${block_name}_wrapper [current_fileset]
+  update_compile_order -fileset sources_1
+}
+
+# Generate all BD output products (IP wrappers, HDL, etc.)
+generate_target all [get_files ${block_name}.bd]
+export_ip_user_files -of_objects [get_files ${block_name}.bd] -no_script -sync -force -quiet
+
+reset_run synth_1
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
+if {[get_property PROGRESS [get_runs synth_1]] != "100%"} {
+  error "Synthesis failed"
+}
+reset_run impl_1
 launch_runs impl_1 -jobs $jobs -to_step write_bitstream
 wait_on_run impl_1
+if {[get_property PROGRESS [get_runs impl_1]] != "100%"} {
+  error "Implementation failed"
+}
 write_hw_platform -fixed -include_bit -force -file $origin_dir/$design_name/${block_name}_wrapper.xsa
 validate_hw_platform -verbose $origin_dir/$design_name/${block_name}_wrapper.xsa
 

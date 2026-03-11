@@ -515,7 +515,7 @@ refclk_PROT0_R0_100_MHz_unique1} \
    CONFIG.PF3_SUBSYSTEM_ID {0007} \
    CONFIG.PF3_SUBSYSTEM_VENDOR_ID {10EE} \
    CONFIG.PL_DISABLE_LANE_REVERSAL {TRUE} \
-   CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {16.0_GT/s} \
+   CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {8.0_GT/s} \
    CONFIG.PL_LINK_CAP_MAX_LINK_WIDTH {X4} \
    CONFIG.REF_CLK_FREQ {100_MHz} \
    CONFIG.VFG0_MSIX_CAP_TABLE_OFFSET {4000} \
@@ -524,7 +524,7 @@ refclk_PROT0_R0_100_MHz_unique1} \
    CONFIG.VFG3_MSIX_CAP_TABLE_OFFSET {4000} \
    CONFIG.acs_ext_cap_enable {false} \
    CONFIG.all_speeds_all_sides {NO} \
-   CONFIG.axisten_freq {250} \
+   CONFIG.axisten_freq {125} \
    CONFIG.axisten_if_enable_client_tag {true} \
    CONFIG.axisten_if_enable_msg_route {1EFFF} \
    CONFIG.axisten_if_enable_msg_route_override {true} \
@@ -540,10 +540,10 @@ refclk_PROT0_R0_100_MHz_unique1} \
    CONFIG.en_l23_entry {false} \
    CONFIG.en_parity {false} \
    CONFIG.en_transceiver_status_ports {false} \
-   CONFIG.enable_auto_rxeq {False} \
+   CONFIG.enable_auto_rxeq {True} \
    CONFIG.enable_ccix {FALSE} \
    CONFIG.enable_dvsec {FALSE} \
-   CONFIG.enable_gen4 {true} \
+   CONFIG.enable_gen4 {false} \
    CONFIG.enable_ibert {false} \
    CONFIG.enable_jtag_dbg {false} \
    CONFIG.enable_more_clk {false} \
@@ -613,13 +613,13 @@ refclk_PROT0_R0_100_MHz_unique1} \
   # Create instance: pcie_phy, and set properties
   set pcie_phy [ create_bd_cell -type ip -vlnv xilinx.com:ip:pcie_phy_versal pcie_phy ]
   set_property -dict [ list \
-   CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {16.0_GT/s} \
+   CONFIG.PL_LINK_CAP_MAX_LINK_SPEED {8.0_GT/s} \
    CONFIG.PL_LINK_CAP_MAX_LINK_WIDTH {X4} \
    CONFIG.aspm {No_ASPM} \
    CONFIG.async_mode {SRNS} \
    CONFIG.disable_double_pipe {YES} \
    CONFIG.en_gt_pclk {false} \
-   CONFIG.ins_loss_profile {Add-in_Card} \
+   CONFIG.ins_loss_profile {Backplane} \
    CONFIG.lane_order {Bottom} \
    CONFIG.lane_reversal {false} \
    CONFIG.phy_async_en {true} \
@@ -628,7 +628,7 @@ refclk_PROT0_R0_100_MHz_unique1} \
    CONFIG.phy_userclk_freq {250_MHz} \
    CONFIG.pipeline_stages {2} \
    CONFIG.sim_model {NO} \
-   CONFIG.tx_preset {4} \
+   CONFIG.tx_preset {5} \
  ] $pcie_phy
 
   # Create instance: refclk_ibuf, and set properties
@@ -738,13 +738,13 @@ proc create_qdma { index } {
     CONFIG.axi_aclk_loopback {false} \
     CONFIG.axi_addr_width {64} \
     CONFIG.axi_data_width {256_bit} \
-    CONFIG.axi_id_width {4} \
+    CONFIG.axi_id_width {5} \
     CONFIG.axi_vip_in_exdes {false} \
     CONFIG.axibar2pciebar_0 {0x0000000000000000} \
     CONFIG.axibar_notranslate {false} \
     CONFIG.axilite_master_en {false} \
     CONFIG.axist_bypass_en {false} \
-    CONFIG.axisten_freq {250} \
+    CONFIG.axisten_freq {125} \
     CONFIG.axisten_if_enable_msg_route {1EFFF} \
     CONFIG.axisten_if_enable_msg_route_override {true} \
     CONFIG.bar0_indicator {1} \
@@ -827,12 +827,12 @@ proc create_qdma { index } {
     CONFIG.enable_64bit {true} \
     CONFIG.enable_at_ports {false} \
     CONFIG.enable_ats_switch {FALSE} \
-    CONFIG.enable_auto_rxeq {False} \
+    CONFIG.enable_auto_rxeq {True} \
     CONFIG.enable_ccix {FALSE} \
     CONFIG.enable_clock_delay_grp {true} \
     CONFIG.enable_dvsec {FALSE} \
     CONFIG.enable_error_injection {false} \
-    CONFIG.enable_gen4 {true} \
+    CONFIG.enable_gen4 {false} \
     CONFIG.enable_ibert {false} \
     CONFIG.enable_jtag_dbg {false} \
     CONFIG.enable_mark_debug {false} \
@@ -854,7 +854,7 @@ proc create_qdma { index } {
     CONFIG.gtwiz_in_core_us {1} \
     CONFIG.gtwiz_in_core_usp {1} \
     CONFIG.iep_enable {false} \
-    CONFIG.ins_loss_profile {Add-in_Card} \
+    CONFIG.ins_loss_profile {Backplane} \
     CONFIG.insert_cips {false} \
     CONFIG.lane_order {Bottom} \
     CONFIG.lane_reversal {false} \
@@ -1020,7 +1020,7 @@ proc create_qdma { index } {
     CONFIG.pfch_cache_depth {16} \
     CONFIG.pipe_line_stage {2} \
     CONFIG.pipe_sim {false} \
-    CONFIG.pl_link_cap_max_link_speed {16.0_GT/s} \
+    CONFIG.pl_link_cap_max_link_speed {8.0_GT/s} \
     CONFIG.pl_link_cap_max_link_width {X4} \
     CONFIG.rbar_enable {false} \
     CONFIG.ref_clk_freq {100_MHz} \
@@ -1187,7 +1187,7 @@ proc connect_qdma_saxi { index } {
   set noc_num_si [get_property CONFIG.NUM_SI [get_bd_cells axi_noc_0]]
   set noc_num_si_plus_one [expr {$noc_num_si+1}]
   set_property -dict [list CONFIG.NUM_SI $noc_num_si_plus_one CONFIG.NUM_CLKS $noc_num_si_plus_one] [get_bd_cells axi_noc_0]
-  set_property -dict [list CONFIG.CONNECTIONS {MC_0 { read_bw {1720} write_bw {1720} read_avg_burst {4} write_avg_burst {4}} }] [get_bd_intf_pins /axi_noc_0/S0${noc_num_si}_AXI]
+  set_property -dict [list CONFIG.CONNECTIONS {MC_0 { read_bw {7000} write_bw {6500} read_avg_burst {64} write_avg_burst {64}} }] [get_bd_intf_pins /axi_noc_0/S0${noc_num_si}_AXI]
   set_property -dict [list CONFIG.ASSOCIATED_BUSIF "S00_AXI:S0${noc_num_si}_AXI"] [get_bd_pins /axi_noc_0/aclk0]
   connect_bd_net [get_bd_pins qdma_${index}/axi_aclk] [get_bd_pins axi_noc_0/aclk${noc_num_si}]
   apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config [list Clk_master "/qdma_$index/axi_aclk (250 MHz)" Clk_slave {/versal_cips_0/fpd_cci_noc_axi0_clk (824 MHz)} Clk_xbar {Auto} Master "/qdma_$index/M_AXI_BRIDGE" Slave "/axi_noc_0/S0${noc_num_si}_AXI" ddr_seg {Auto} intc_ip {/axi_noc_0} master_apm {0}]  [get_bd_intf_pins axi_noc_0/S0${noc_num_si}_AXI]

@@ -1,7 +1,10 @@
 RemoteSystemsTempFiles/
 Vivado/.Xil/
+PetaLinux/.Xil/
 *.log
 *.jou
+vivado_pid*.str
+PetaLinux/AGENTS.md
 Vitis/*_workspace/
 Vitis/.*/
 Vitis/.*

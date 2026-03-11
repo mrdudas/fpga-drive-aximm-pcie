@@ -1,0 +1,20 @@
+--- a/drivers/pci/controller/pcie-xilinx-dma-pl.c
++++ b/drivers/pci/controller/pcie-xilinx-dma-pl.c
+@@ -711,7 +711,7 @@
+ 		return port->msi.irq_msi0;
+ 	}
+ 	ret = devm_request_irq(dev, port->msi.irq_msi0, xilinx_pl_dma_pcie_msi_handler_low,
+-			       IRQF_SHARED | IRQF_NO_THREAD | IRQF_NO_AUTOEN,
++			       IRQF_NO_THREAD | IRQF_NO_AUTOEN,
+ 			       "xlnx-pcie-dma-pl", port);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register interrupt\n");
+@@ -723,7 +723,7 @@
+ 		return port->msi.irq_msi1;
+ 	}
+ 	ret = devm_request_irq(dev, port->msi.irq_msi1, xilinx_pl_dma_pcie_msi_handler_high,
+-			       IRQF_SHARED | IRQF_NO_THREAD | IRQF_NO_AUTOEN,
++			       IRQF_NO_THREAD | IRQF_NO_AUTOEN,
+ 			       "xlnx-pcie-dma-pl", port);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register interrupt\n");
