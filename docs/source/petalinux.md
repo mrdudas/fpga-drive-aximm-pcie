@@ -237,7 +237,7 @@ the PetaLinux build.
 
 ### QDMA Root Port Linux Driver Patch
 
-* Patch file: `Opsero_QDMA_Bridge_Support_Fixes_for_RC_Linux_Driver_2024_1_32_n_64.patch`
+* Patch file: `Opsero_QDMA_Bridge_Support_Fixes_for_RC_Linux_Driver_2024_2_32_n_64.patch`
 * Location: `PetaLinux/bsp/<target board>/project-spec/meta-user/recipes-kernel/linux/linux-xlnx/`
 
 The Versal projects in this repository contain a patch to the QDMA/XDMA Linux driver. The patch incorporates

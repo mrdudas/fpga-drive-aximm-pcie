@@ -1156,6 +1156,10 @@ connect_bd_net [get_bd_pins versal_cips_0/pl0_ref_clk] [get_bd_pins versal_cips_
 
 create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 axi_smc_lpd
 set_property -dict [list CONFIG.NUM_SI {1}] [get_bd_cells axi_smc_lpd]
+# Disable low-area mode to properly handle WRAP bursts from M_AXI_LPD
+set_property CONFIG.ADVANCED_PROPERTIES \
+  {__experimental_features__ {disable_low_area_mode 1}} \
+  [get_bd_cells axi_smc_lpd]
 connect_bd_net [get_bd_pins versal_cips_0/pl0_ref_clk] [get_bd_pins axi_smc_lpd/aclk]
 connect_bd_net [get_bd_pins versal_cips_0/pl0_ref_clk] [get_bd_pins versal_cips_0/m_axi_lpd_aclk]
 
