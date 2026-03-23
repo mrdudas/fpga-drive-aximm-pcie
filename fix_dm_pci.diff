@@ -1,0 +1,16 @@
+--- PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma_dm_pci.c
++++ PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma_dm_pci.c
+@@ -99 +99 @@
+-host->np_mem_base = 0xB0000000;
+-host->np_mem_max = 0xBF000000;
+-host->p_mem_base = 0xC0000000;
+-host->p_mem_max = 0xDF000000;
++if (host->csr_phys == 0x80000000) {
++host->np_mem_base = 0xA8000000;
++host->np_mem_max = 0xAFFFFFFF;
++} else {
++host->np_mem_base = 0xB0000000;
++host->np_mem_max = 0xBFFFFFFF;
++}
++host->p_mem_base = 0xC0000000;
++host->p_mem_max = 0xDF000000;

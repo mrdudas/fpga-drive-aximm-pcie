@@ -1,0 +1,10 @@
+--- PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma_dm_pci.c
++++ PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma_dm_pci.c
+@@ -231,7 +231,7 @@
+         /* Block writes to Bridge Base/Limit registers on the Root Port (Bus 0).
+            Writing these standard Type 1 registers breaks the Xilinx AXI PCIe 
+            bridge translation (which we already set up manually). */
+-        if (PCI_BUS(bdf) == 0 && (PCI_DEV(bdf) == 0 || PCI_DEV(bdf) == 1)) {
++        if (PCI_BUS(bdf) - dev_seq(dev) == 0 && (PCI_DEV(bdf) == 0 || PCI_DEV(bdf) == 1)) {
+                 if (offset >= PCI_BASE_ADDRESS_0 && offset <= PCI_BASE_ADDRESS_5)
+                         return 0;

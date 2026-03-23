@@ -69,3 +69,9 @@ PetaLinux/zcu208/
 Vivado/zcu216/
 PetaLinux/zcu216/
 # UPDATER END
+
+# Local artifacts (do not push)
+*.zip
+build_result.txt
+qdma_registers_dump.txt
+last_commit.txt

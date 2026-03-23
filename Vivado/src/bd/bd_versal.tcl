@@ -630,7 +630,7 @@ refclk_PROT0_R0_100_MHz_unique1} \
    CONFIG.sim_model {NO} \
    CONFIG.tx_preset {4} \
  ] $pcie_phy
-
+  # CONFIG.tx_preset {4} \ volt de feljebb kellett vennem a HW miatt
   # Create instance: refclk_ibuf, and set properties
   set refclk_ibuf [ create_bd_cell -type ip -vlnv xilinx.com:ip:util_ds_buf refclk_ibuf ]
   set_property -dict [ list \

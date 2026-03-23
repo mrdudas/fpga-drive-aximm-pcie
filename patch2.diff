@@ -1,0 +1,12 @@
+--- PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma_dm_pci.c
++++ PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma_dm_pci.c
+@@ -242,6 +242,9 @@
+                     offset == PCI_IO_BASE || offset == PCI_IO_LIMIT)
+                         return 0;
+         }
++
++        return pci_generic_mmap_write_config(dev, qdma_dm_pci_config_address,
++                                             bdf, offset, value, size);
+ }
+ 
+ static const struct dm_pci_ops qdma_pci_ops = {

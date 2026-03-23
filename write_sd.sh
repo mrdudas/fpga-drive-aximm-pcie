@@ -4,7 +4,10 @@
 
 set -e
 
-IMAGES_DIR="PetaLinux/vck190_fmcp1/images/linux"
+REPO_ROOT="/home/zsolt/pesa101/FPGADEV/fpga-drive-aximm-pcie"
+SETENV_SCRIPT="$REPO_ROOT/setenv"
+PETALINUX_PROJECT_DIR="$REPO_ROOT/PetaLinux/vck190_fmcp1"
+IMAGES_DIR="/home/zsolt/pesa101/FPGADEV/fpga-drive-aximm-pcie/PetaLinux/vck190_fmcp1/images/linux"
 SD_DEV="${1:-sdb}"
 SD_PATH="/dev/$SD_DEV"
 
@@ -38,9 +41,19 @@ echo ""
 read -r -p "Biztos törli az SD kártyát és felírja az új képet? [i/N] " confirm
 [[ "${confirm,,}" == "i" ]] || { echo "Megszakítva."; exit 0; }
 
+echo ""
+echo "[1/6] PetaLinux boot csomag készítése..."
+if [[ ! -f "$SETENV_SCRIPT" ]]; then
+    echo "HIBA: Nem található a környezet beállító script: $SETENV_SCRIPT"
+    exit 1
+fi
+
+BUILD_USER="${SUDO_USER:-$USER}"
+sudo -u "$BUILD_USER" bash -lc "source '$SETENV_SCRIPT' && cd '$PETALINUX_PROJECT_DIR' && petalinux-package boot --plm --psmfw --u-boot --dtb --force"
+
 # --- Unmount ---
 echo ""
-echo "[1/5] Unmount..."
+echo "[2/6] Unmount..."
 for part in "$SD_PATH"?*; do
     if mount | grep -q "$part"; then
         echo "  umount $part"
@@ -50,7 +63,7 @@ done
 sleep 1
 
 # --- Particionálás ---
-echo "[2/5] Particionálás (FAT32 boot + ext4 rootfs)..."
+echo "[3/6] Particionálás (FAT32 boot + ext4 rootfs)..."
 # Méret: boot = 500MB fix, többi = rootfs
 TOTAL_SECTORS=$(blockdev --getsz "$SD_PATH")
 SECTOR_SIZE=512
@@ -75,12 +88,12 @@ else
 fi
 
 # --- Formázás ---
-echo "[3/5] Formázás..."
+echo "[4/6] Formázás..."
 mkfs.vfat -F 32 -n BOOT "$PART1"
 mkfs.ext4 -F -L rootfs "$PART2"
 
 # --- Boot partíció feltöltése ---
-echo "[4/5] Boot fájlok írása (BOOT.BIN, image.ub, boot.scr)..."
+echo "[5/6] Boot fájlok írása (BOOT.BIN, image.ub, boot.scr)..."
 BOOT_MNT=$(mktemp -d)
 mount "$PART1" "$BOOT_MNT"
 cp "$IMAGES_DIR/BOOT.BIN"   "$BOOT_MNT/"
@@ -91,7 +104,7 @@ umount "$BOOT_MNT"
 rmdir "$BOOT_MNT"
 
 # --- Rootfs ---
-echo "[5/5] Rootfs írása (rootfs.ext4 dd)..."
+echo "[6/6] Rootfs írása (rootfs.ext4 dd)..."
 dd if="$IMAGES_DIR/rootfs.ext4" of="$PART2" bs=4M status=progress
 sync
 # Fájlrendszer méret kiterjesztése a teljes partícióra

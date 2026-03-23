@@ -1,0 +1,29 @@
+--- PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma_dm_pci.c
++++ PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma_dm_pci.c
+@@ -228,19 +228,17 @@
+                                     uint offset, ulong value,
+                                     enum pci_size_t size)
+ {
+-        /* Block writes to Bridge Base/Limit registers on the Root Port.
+-           Writing these standard Type 1 registers breaks the Xilinx AXI PCIe 
+-           bridge translation (which we already set up manually). */
+-        if (PCI_BUS(bdf) - dev_seq(dev) == 0 && (PCI_DEV(bdf) == 0 || PCI_DEV(bdf) == 1)) {
+-                if (offset >= PCI_BASE_ADDRESS_0 && offset <= PCI_BASE_ADDRESS_5)
+-                        return 0;
+-                if (offset == PCI_MEMORY_BASE || offset == PCI_MEMORY_LIMIT ||
+-                    offset == PCI_PREF_MEMORY_BASE || offset == PCI_PREF_MEMORY_LIMIT ||
+-                    offset == PCI_IO_BASE || offset == PCI_IO_LIMIT)
+-                        return 0;
++        struct pci_controller *hose = dev_get_uclass_priv(dev);
++        unsigned int bus = PCI_BUS(bdf);
++        
++        /* Completely freeze the Type 1 configuration space of the Root Port.
++           The U-Boot auto-config will attempt to assign bus numbers (Sec=1, 2, etc.)
++           and Memory Base/Limit which completely destroys the AXI Translation 
++           table we set up in qdma_init_instance, leading to a fatal SError (esr 0xbf000000). */
++        if (hose && bus == hose->first_busno && PCI_DEV(bdf) == 0 && PCI_FUNC(bdf) == 0) {
++                if (offset != PCI_COMMAND && offset != PCI_STATUS)
++                        return 0; /* Silently ignore */
+         }
+ 
+         return pci_generic_mmap_write_config(dev, qdma_dm_pci_config_address,

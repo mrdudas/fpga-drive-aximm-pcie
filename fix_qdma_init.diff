@@ -1,0 +1,9 @@
+--- PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma.c
++++ PetaLinux/vck190_fmcp1/project-spec/meta-user/recipes-bsp/u-boot/files/opsero_qdma.c
+@@ -362,4 +362,4 @@
+ XPAR_QDMA_0_BASEADDR,      /* ECAM base (from xparameters) */
+-0xB0000000,                /* NP mem base */
+-0xBF000000,                /* NP mem max */
++0xA8000000,                /* NP mem base */
++0xAFFFFFFF,                /* NP mem max */
+ 0xC0000000,                /* P mem base */

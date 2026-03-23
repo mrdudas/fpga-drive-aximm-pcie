@@ -1,0 +1,539 @@
+In:    serial@ff000000
+Out:   serial@ff000000
+Err:   serial@ff000000
+Bootmode: LVL_SHFT_SD_MODE1
+Net:   
+ZYNQ GEM: ff0c0000, mdio bus ff0c0000, phyaddr 1, interface rgmii-id
+
+Warning: ethernet@ff0c0000 (eth0) using random MAC address - 62:d2:49:c7:ae:f0
+eth0: ethernet@ff0c0000Get shared mii bus on ethernet@ff0d0000
+
+ZYNQ GEM: ff0d0000, mdio bus ff0c0000, phyaddr 2, interface rgmii-id
+
+Warning: ethernet@ff0d0000 (eth1) using random MAC address - f2:b3:59:e4:4d:a9
+, eth1: ethernet@ff0d0000
+PREBOOT-QDMA-START
+QDMA DBG: do_pcie_qdma_init STEP 1/3 command enter argc=1
+QDMA DBG: qdma_init_all STEP 1/4 reset instance table
+QDMA DBG: qdma_init_all STEP 2/4 init QDMA0
+QDMA DBG: qdma_init_instance STEP 1/9 enter csr=0x80000000 ecam=0x400000000
+QDMA DBG: qdma_init_instance STEP 2/9 allocate slot idx=0
+QDMA: Initializing instance at CSR=0x80000000 ECAM=0x400000000
+  NP Memory: 0xa8000000 - 0xafffffff
+  P Memory:  0xc0000000 - 0xdeffffff
+QDMA DBG: qdma_init_instance STEP 3/9 configure MMU attrs
+QDMA DBG: MMU ATTR csr=[0x80000000..0x8fffffff] ecam=[0x400000000..0x40fffffff] (NP/P apertures unchanged)
+QDMA DBG: qdma_init_instance STEP 4/9 check link
+QDMA: PCIe link is UP
+QDMA DBG: qdma_init_instance STEP 5/9 setup command regs
+QDMA DBG: qdma_setup_command_registers STEP 1/3 read current cmd/status
+QDMA DBG: qdma_setup_command_registers STEP 2/3 current=0x00100000
+QDMA: Setting command register: 0x00100147
+QDMA DBG: qdma_setup_command_registers verify readback=0x00100147
+QDMA DBG: qdma_setup_command_registers STEP 3/3 write done
+QDMA CFG DUMP[after-cmd]: ecam=0x400000000 00:00.0 ID=b0b410ee CMD=00100147 BUS=00000000 CLASS=06040000 HDR=00010000 BAR0=0000000c BAR1=00000000
+QDMA DBG: qdma_init_instance STEP 6/9 setup bus numbers
+QDMA DBG: qdma_setup_bridge_bus_numbers STEP 1/3 read current
+QDMA: Current bus numbers: 0x00000000
+QDMA DBG: qdma_setup_bridge_bus_numbers STEP 2/3 apply safe fallback (firmware left zero)
+QDMA: Programmed fallback bus numbers: 0x00ff0100
+QDMA DBG: qdma_setup_bridge_bus_numbers decode pri=0 sec=1 sub=255
+QDMA DBG: qdma_setup_bridge_bus_numbers STEP 3/3 done
+QDMA CFG DUMP[after-busnum]: ecam=0x400000000 00:00.0 ID=b0b410ee CMD=00100147 BUS=00ff0100 CLASS=06040000 HDR=00010000 BAR0=0000000c BAR1=00000000
+QDMA DBG: qdma_init_instance STEP 7/9 enable bridge windows
+QDMA DBG: qdma_enable_bridge_access STEP 1/4 enter csr=0x80000000
+QDMA DBG: qdma_enable_bridge_access STEP 2/4 NP size=0x8000000
+QDMA: Configuring NP window 0: addr=0xa8000000 size=16384K
+QDMA: Configuring NP window 1: addr=0xa9000000 size=16384K
+QDMA: Configuring NP window 2: addr=0xaa000000 size=16384K
+QDMA: Configuring NP window 3: addr=0xab000000 size=16384K
+QDMA: Configuring NP window 4: addr=0xac000000 size=16384K
+QDMA: Configuring NP window 5: addr=0xad000000 size=16384K
+QDMA: Configuring NP window 6: addr=0xae000000 size=16384K
+QDMA: Configuring NP window 7: addr=0xaf000000 size=16384K
+QDMA DBG: qdma_enable_bridge_access STEP 3/4 NP windows done
+QDMA WIN DUMP[np-first]: csr=0x80000000 idx=0 LO=a8000000 HI=00000000 PASID=00000000 FN=00000000 WIN=c0001000 REG=00000000
+QDMA WIN DUMP[np-last]: csr=0x80000000 idx=7 LO=af000000 HI=00000000 PASID=00000000 FN=00000000 WIN=c0001000 REG=00000000
+QDMA: Configuring P window 0: addr=0xc0000000 size=63488K
+QDMA: Configuring P window 1: addr=0xc3e00000 size=63488K
+QDMA: Configuring P window 2: addr=0xc7c00000 size=63488K
+QDMA: Configuring P window 3: addr=0xcba00000 size=63488K
+QDMA: Configuring P window 4: addr=0xcf800000 size=63488K
+QDMA: Configuring P window 5: addr=0xd3600000 size=63488K
+QDMA: Configuring P window 6: addr=0xd7400000 size=63488K
+QDMA: Configuring P window 7: addr=0xdb200000 size=63488K
+QDMA DBG: qdma_enable_bridge_access STEP 4/4 P windows done
+QDMA WIN DUMP[p-first]: csr=0x80000000 idx=0 LO=c0000000 HI=00000000 PASID=00000000 FN=00000000 WIN=c0003e00 REG=00000000
+QDMA WIN DUMP[p-last]: csr=0x80000000 idx=7 LO=db200000 HI=00000000 PASID=00000000 FN=00000000 WIN=c0003e00 REG=00000000
+QDMA CFG DUMP[after-win]: ecam=0x400000000 00:00.0 ID=b0b410ee CMD=00100147 BUS=00ff0100 CLASS=06040000 HDR=00010000 BAR0=0000000c BAR1=00000000
+QDMA DBG: qdma_init_instance STEP 8/9 mark initialized
+QDMA: Instance initialization complete
+QDMA DBG: qdma_init_instance STEP 9/9 done
+QDMA DBG: qdma_init_all STEP 3/4 QDMA0 done
+QDMA DBG: qdma_init_all STEP 3.5/4 attempt QDMA1 init (best-effort)
+QDMA DBG: qdma_init_instance STEP 1/9 enter csr=0x90000000 ecam=0x440000000
+QDMA DBG: qdma_init_instance STEP 2/9 allocate slot idx=1
+QDMA: Initializing instance at CSR=0x90000000 ECAM=0x440000000
+  NP Memory: 0xb0000000 - 0xbfffffff
+  P Memory:  0xe0000000 - 0xfeffffff
+QDMA DBG: qdma_init_instance STEP 3/9 configure MMU attrs
+QDMA DBG: MMU ATTR csr=[0x90000000..0x9fffffff] ecam=[0x440000000..0x44fffffff] (NP/P apertures unchanged)
+QDMA DBG: qdma_init_instance STEP 4/9 check link
+QDMA: PCIe link is UP
+QDMA DBG: qdma_init_instance STEP 5/9 setup command regs
+QDMA DBG: qdma_setup_command_registers STEP 1/3 read current cmd/status
+QDMA DBG: qdma_setup_command_registers STEP 2/3 current=0x00100000
+QDMA: Setting command register: 0x00100147
+QDMA DBG: qdma_setup_command_registers verify readback=0x00100147
+QDMA DBG: qdma_setup_command_registers STEP 3/3 write done
+QDMA CFG DUMP[after-cmd]: ecam=0x440000000 00:00.0 ID=b0b410ee CMD=00100147 BUS=00000000 CLASS=06040000 HDR=00010000 BAR0=0000000c BAR1=00000000
+QDMA DBG: qdma_init_instance STEP 6/9 setup bus numbers
+QDMA DBG: qdma_setup_bridge_bus_numbers STEP 1/3 read current
+QDMA: Current bus numbers: 0x00000000
+QDMA DBG: qdma_setup_bridge_bus_numbers STEP 2/3 apply safe fallback (firmware left zero)
+QDMA: Programmed fallback bus numbers: 0x00ff0100
+QDMA DBG: qdma_setup_bridge_bus_numbers decode pri=0 sec=1 sub=255
+QDMA DBG: qdma_setup_bridge_bus_numbers STEP 3/3 done
+QDMA CFG DUMP[after-busnum]: ecam=0x440000000 00:00.0 ID=b0b410ee CMD=00100147 BUS=00ff0100 CLASS=06040000 HDR=00010000 BAR0=0000000c BAR1=00000000
+QDMA DBG: qdma_init_instance STEP 7/9 enable bridge windows
+QDMA DBG: qdma_enable_bridge_access STEP 1/4 enter csr=0x90000000
+QDMA DBG: qdma_enable_bridge_access STEP 2/4 NP size=0x10000000
+QDMA: Configuring NP window 0: addr=0xb0000000 size=32768K
+QDMA: Configuring NP window 1: addr=0xb2000000 size=32768K
+QDMA: Configuring NP window 2: addr=0xb4000000 size=32768K
+QDMA: Configuring NP window 3: addr=0xb6000000 size=32768K
+QDMA: Configuring NP window 4: addr=0xb8000000 size=32768K
+QDMA: Configuring NP window 5: addr=0xba000000 size=32768K
+QDMA: Configuring NP window 6: addr=0xbc000000 size=32768K
+QDMA: Configuring NP window 7: addr=0xbe000000 size=32768K
+QDMA DBG: qdma_enable_bridge_access STEP 3/4 NP windows done
+QDMA WIN DUMP[np-first]: csr=0x90000000 idx=0 LO=b0000000 HI=00000000 PASID=00000000 FN=00000000 WIN=c0002000 REG=00000000
+QDMA WIN DUMP[np-last]: csr=0x90000000 idx=7 LO=be000000 HI=00000000 PASID=00000000 FN=00000000 WIN=c0002000 REG=00000000
+QDMA: Configuring P window 0: addr=0xe0000000 size=63488K
+QDMA: Configuring P window 1: addr=0xe3e00000 size=63488K
+QDMA: Configuring P window 2: addr=0xe7c00000 size=63488K
+QDMA: Configuring P window 3: addr=0xeba00000 size=63488K
+QDMA: Configuring P window 4: addr=0xef800000 size=63488K
+QDMA: Configuring P window 5: addr=0xf3600000 size=63488K
+QDMA: Configuring P window 6: addr=0xf7400000 size=63488K
+QDMA: Configuring P window 7: addr=0xfb200000 size=63488K
+QDMA DBG: qdma_enable_bridge_access STEP 4/4 P windows done
+QDMA WIN DUMP[p-first]: csr=0x90000000 idx=0 LO=e0000000 HI=00000000 PASID=00000000 FN=00000000 WIN=c0003e00 REG=00000000
+QDMA WIN DUMP[p-last]: csr=0x90000000 idx=7 LO=fb200000 HI=00000000 PASID=00000000 FN=00000000 WIN=c0003e00 REG=00000000
+QDMA CFG DUMP[after-win]: ecam=0x440000000 00:00.0 ID=b0b410ee CMD=00100147 BUS=00ff0100 CLASS=06040000 HDR=00010000 BAR0=0000000c BAR1=00000000
+QDMA DBG: qdma_init_instance STEP 8/9 mark initialized
+QDMA: Instance initialization complete
+QDMA DBG: qdma_init_instance STEP 9/9 done
+QDMA DBG: qdma_init_all QDMA1 init done
+QDMA DBG: qdma_init_all STEP 4/4 done
+QDMA DBG: do_pcie_qdma_init STEP 2/3 init done
+QDMA initialization completed successfully
+QDMA DBG: do_pcie_qdma_init STEP 3/3 command exit
+QDMA DBG: do_pcie_qdma_scan STEP 1/4 command enter argc=3
+QDMA DBG: do_pcie_qdma_scan STEP 2/4 scanning instance=0 csr=0x80000000
+QDMA DBG: qdma_scan_instance STEP 1/3 enter ecam=0x400000000 max_bus=1 timeout=250
+QDMA: Scanning ECAM 0x400000000 buses 0..1 (timeout=250ms)
+QDMA DBG: qdma_is_link_up csr=0x80000000 PSCR=0x00004884 LNKUP=1
+QDMA SCAN DBG: bus=0 start elapsed=18ms total_found=0
+  00:00.0  VID:DID 10ee:b0b4  CLASS 060400  HDR 01  BAR0 0000000c BAR1 00000000
+QDMA SCAN DBG: bus=0 done new-found=1 elapsed=30ms
+QDMA SCAN DBG: bus=1 start elapsed=34ms total_found=1
+  01:00.0  VID:DID 144d:a80a  CLASS 010802  HDR 00  BAR0 00000004 BAR1 00000000
+QDMA SCAN DBG: bus=1 done new-found=1 elapsed=46ms
+QDMA: Scan complete in 51ms, found=2
+QDMA DBG: qdma_scan_instance STEP 2/3 scan loops done
+QDMA DBG: qdma_scan_instance STEP 3/3 exit found_total=2 found_this_instance=2
+QDMA DBG: do_pcie_qdma_scan STEP 2/4 scanning instance=1 csr=0x90000000
+QDMA DBG: qdma_scan_instance STEP 1/3 enter ecam=0x440000000 max_bus=1 timeout=250
+QDMA: Scanning ECAM 0x440000000 buses 0..1 (timeout=250ms)
+QDMA DBG: qdma_is_link_up csr=0x90000000 PSCR=0x00004884 LNKUP=1
+QDMA SCAN DBG: bus=0 start elapsed=18ms total_found=2
+  00:00.0  VID:DID 10ee:b0b4  CLASS 060400  HDR 01  BAR0 0000000c BAR1 00000000
+QDMA SCAN DBG: bus=0 done new-found=1 elapsed=30ms
+QDMA SCAN DBG: bus=1 start elapsed=35ms total_found=3
+  01:00.0  VID:DID 144d:a80a  CLASS 010802  HDR 00  BAR0 00000004 BAR1 00000000
+QDMA SCAN DBG: bus=1 done new-found=1 elapsed=46ms
+QDMA: Scan complete in 51ms, found=4
+QDMA DBG: qdma_scan_instance STEP 2/3 scan loops done
+QDMA DBG: qdma_scan_instance STEP 3/3 exit found_total=4 found_this_instance=2
+QDMA DBG: do_pcie_qdma_scan STEP 3/4 scan done found=4
+QDMA DBG: do_pcie_qdma_scan STEP 4/4 command exit
+PREBOOT-NVME-START
+PREBOOT-NVME-SCAN-OK
+PREBOOT-NVME-END
+QDMA-PCI-PREBOOT-DONE
+Hit any key to stop autoboot:  0 
+Versal> pci enum
+QDMA DM PCI DBG: of_to_plat STEP 1/7 enter dev=axi-pcie@80000000
+QDMA DM PCI: of_to_plat called for axi-pcie@80000000 (offset=19444)
+QDMA DM PCI DBG: of_to_plat STEP 2/7 read reg[0]
+QDMA DM PCI DBG: of_to_plat STEP 3/7 read reg[1]
+QDMA DM PCI DBG: of_to_plat STEP 4/7 map ECAM
+QDMA DM PCI DBG: of_to_plat STEP 5/7 set memory windows
+QDMA DM PCI DBG: of_to_plat STEP 6/7 values csr=0x80000000 ecam=0x400000000
+QDMA DM PCI: of_to_plat done - CSR=0x80000000 ECAM=0x400000000 (mapped=0000000400000000)
+QDMA DM PCI DBG: of_to_plat STEP 7/7 exit
+QDMA DM PCI DBG: probe STEP 1/7 enter dev=axi-pcie@80000000
+QDMA DM PCI: probe START - dev=axi-pcie@80000000 priv@000000007df6af70
+QDMA DM PCI: CSR=0x80000000 ECAM=0x400000000 NP=0xa8000000-0xafffffff P=0xc0000000-0xdeffffff
+QDMA DM PCI DBG: probe STEP 2/7 check already-initialized
+QDMA DM PCI: already initialized, skipping init
+QDMA DM PCI DBG: probe STEP 3/7 init skipped
+QDMA DM PCI DBG: probe STEP 5/7 finalize host
+QDMA DM PCI DBG: probe host regions populated count=2
+QDMA DM PCI: host ready
+QDMA DM PCI DBG: probe STEP 6/7 host ready printed
+QDMA DM PCI DBG: probe STEP 7/7 exit
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x0 local_bus=0 addr=0000000400000000
+QDMA DM PCI DBG: read cfg bdf=00:00.0 off=0x0 len=1 ret=0 val=0x10ee
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x0 local_bus=0 addr=0000000400000000
+QDMA DM PCI DBG: filtering unsupported BDF 00:01.0 (local bus 0), returning ENODEV
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x4 local_bus=0 addr=0000000400000004
+QDMA DM PCI DBG: read cfg bdf=00:00.0 off=0x4 len=1 ret=0 val=0x147
+QDMA DM PCI DBG: write req bdf=00:00.0 off=0x10 len=2 val=0xffffffff
+QDMA DM PCI DBG: blocked write to root port offset 0x10 len 2
+QDMA DM PCI DBG: read quirk root-port BAR bdf=00:00.0 off=0x10 -> 0x0
+QDMA DM PCI DBG: write req bdf=00:00.0 off=0x14 len=2 val=0xffffffff
+QDMA DM PCI DBG: blocked write to root port offset 0x14 len 2
+QDMA DM PCI DBG: read quirk root-port BAR bdf=00:00.0 off=0x14 -> 0x0
+QDMA DM PCI DBG: write req bdf=00:00.0 off=0x4 len=1 val=0x144
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x4 local_bus=0 addr=0000000400000004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x4 local_bus=0 addr=0000000400000004
+QDMA DM PCI DBG: write done bdf=00:00.0 off=0x4 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x4 local_bus=0 addr=0000000400000004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x4 local_bus=0 addr=0000000400000004
+QDMA DM PCI DBG: read cfg bdf=00:00.0 off=0x4 len=1 ret=0 val=0x144
+QDMA DM PCI DBG: write req bdf=00:00.0 off=0x18 len=0 val=0x0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x18 local_bus=0 addr=0000000400000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x18 local_bus=0 addr=0000000400000018
+QDMA DM PCI DBG: write done bdf=00:00.0 off=0x18 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x18 local_bus=0 addr=0000000400000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x18 local_bus=0 addr=0000000400000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x18 local_bus=0 addr=0000000400000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x18 local_bus=0 addr=0000000400000018
+QDMA DM PCI DBG: write req bdf=00:00.0 off=0x20 len=1 val=0xa800
+QDMA DM PCI DBG: write done bdf=00:00.0 off=0x20 ret=0
+QDMA DM PCI DBG: write req bdf=00:00.0 off=0x24 len=1 val=0xc001
+QDMA DM PCI DBG: write done bdf=00:00.0 off=0x24 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x4 local_bus=0 addr=0000000400000004
+QDMA DM PCI DBG: write req bdf=00:00.0 off=0x4 len=1 val=0x146
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x4 local_bus=0 addr=0000000400000004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x4 local_bus=0 addr=0000000400000004
+QDMA DM PCI DBG: write done bdf=00:00.0 off=0x4 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x0 local_bus=1 addr=0000000400100000
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x0 len=1 ret=0 val=0x144d
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x0 local_bus=1 addr=0000000400100000
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:01.0 off=0x0 local_bus=1 addr=0000000400108000
+QDMA DM PCI DBG: read cfg bdf=01:01.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:02.0 off=0x0 local_bus=1 addr=0000000400110000
+QDMA DM PCI DBG: read cfg bdf=01:02.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:03.0 off=0x0 local_bus=1 addr=0000000400118000
+QDMA DM PCI DBG: read cfg bdf=01:03.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:04.0 off=0x0 local_bus=1 addr=0000000400120000
+QDMA DM PCI DBG: read cfg bdf=01:04.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:05.0 off=0x0 local_bus=1 addr=0000000400128000
+QDMA DM PCI DBG: read cfg bdf=01:05.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:06.0 off=0x0 local_bus=1 addr=0000000400130000
+QDMA DM PCI DBG: read cfg bdf=01:06.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:07.0 off=0x0 local_bus=1 addr=0000000400138000
+QDMA DM PCI DBG: read cfg bdf=01:07.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:08.0 off=0x0 local_bus=1 addr=0000000400140000
+QDMA DM PCI DBG: read cfg bdf=01:08.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:09.0 off=0x0 local_bus=1 addr=0000000400148000
+QDMA DM PCI DBG: read cfg bdf=01:09.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:0a.0 off=0x0 local_bus=1 addr=0000000400150000
+QDMA DM PCI DBG: read cfg bdf=01:0a.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:0b.0 off=0x0 local_bus=1 addr=0000000400158000
+QDMA DM PCI DBG: read cfg bdf=01:0b.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:0c.0 off=0x0 local_bus=1 addr=0000000400160000
+QDMA DM PCI DBG: read cfg bdf=01:0c.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:0d.0 off=0x0 local_bus=1 addr=0000000400168000
+QDMA DM PCI DBG: read cfg bdf=01:0d.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:0e.0 off=0x0 local_bus=1 addr=0000000400170000
+QDMA DM PCI DBG: read cfg bdf=01:0e.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:0f.0 off=0x0 local_bus=1 addr=0000000400178000
+QDMA DM PCI DBG: read cfg bdf=01:0f.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:10.0 off=0x0 local_bus=1 addr=0000000400180000
+QDMA DM PCI DBG: read cfg bdf=01:10.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:11.0 off=0x0 local_bus=1 addr=0000000400188000
+QDMA DM PCI DBG: read cfg bdf=01:11.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:12.0 off=0x0 local_bus=1 addr=0000000400190000
+QDMA DM PCI DBG: read cfg bdf=01:12.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:13.0 off=0x0 local_bus=1 addr=0000000400198000
+QDMA DM PCI DBG: read cfg bdf=01:13.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:14.0 off=0x0 local_bus=1 addr=00000004001a0000
+QDMA DM PCI DBG: read cfg bdf=01:14.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:15.0 off=0x0 local_bus=1 addr=00000004001a8000
+QDMA DM PCI DBG: read cfg bdf=01:15.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:16.0 off=0x0 local_bus=1 addr=00000004001b0000
+QDMA DM PCI DBG: read cfg bdf=01:16.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:17.0 off=0x0 local_bus=1 addr=00000004001b8000
+QDMA DM PCI DBG: read cfg bdf=01:17.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:18.0 off=0x0 local_bus=1 addr=00000004001c0000
+QDMA DM PCI DBG: read cfg bdf=01:18.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:19.0 off=0x0 local_bus=1 addr=00000004001c8000
+QDMA DM PCI DBG: read cfg bdf=01:19.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:1a.0 off=0x0 local_bus=1 addr=00000004001d0000
+QDMA DM PCI DBG: read cfg bdf=01:1a.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:1b.0 off=0x0 local_bus=1 addr=00000004001d8000
+QDMA DM PCI DBG: read cfg bdf=01:1b.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:1c.0 off=0x0 local_bus=1 addr=00000004001e0000
+QDMA DM PCI DBG: read cfg bdf=01:1c.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:1d.0 off=0x0 local_bus=1 addr=00000004001e8000
+QDMA DM PCI DBG: read cfg bdf=01:1d.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:1e.0 off=0x0 local_bus=1 addr=00000004001f0000
+QDMA DM PCI DBG: read cfg bdf=01:1e.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:1f.0 off=0x0 local_bus=1 addr=00000004001f8000
+QDMA DM PCI DBG: read cfg bdf=01:1f.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x4 local_bus=1 addr=0000000400100004
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x4 len=1 ret=0 val=0x0
+QDMA DM PCI DBG: write req bdf=01:00.0 off=0x10 len=2 val=0xffffffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x10 local_bus=1 addr=0000000400100010
+QDMA DM PCI DBG: write done bdf=01:00.0 off=0x10 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x10 local_bus=1 addr=0000000400100010
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x10 len=2 ret=0 val=0xffffc004
+QDMA DM PCI DBG: write req bdf=01:00.0 off=0x14 len=2 val=0xffffffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x14 local_bus=1 addr=0000000400100014
+QDMA DM PCI DBG: write done bdf=01:00.0 off=0x14 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x14 local_bus=1 addr=0000000400100014
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x14 len=2 ret=0 val=0xffffffff
+QDMA DM PCI DBG: write req bdf=01:00.0 off=0x10 len=2 val=0xa8000000
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x10 local_bus=1 addr=0000000400100010
+QDMA DM PCI DBG: write done bdf=01:00.0 off=0x10 ret=0
+QDMA DM PCI DBG: write req bdf=01:00.0 off=0x14 len=2 val=0x0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x14 local_bus=1 addr=0000000400100014
+QDMA DM PCI DBG: write done bdf=01:00.0 off=0x14 ret=0
+QDMA DM PCI DBG: write req bdf=01:00.0 off=0x18 len=2 val=0xffffffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x18 local_bus=1 addr=0000000400100018
+QDMA DM PCI DBG: write done bdf=01:00.0 off=0x18 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x18 local_bus=1 addr=0000000400100018
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x18 len=2 ret=0 val=0x0
+QDMA DM PCI DBG: write req bdf=01:00.0 off=0x20 len=2 val=0xffffffff
+QDMA DM PCI DBG: write done bdf=01:00.0 off=0x20 ret=0
+QDMA DM PCI DBG: write req bdf=01:00.0 off=0x24 len=2 val=0xffffffff
+QDMA DM PCI DBG: write done bdf=01:00.0 off=0x24 ret=0
+QDMA DM PCI DBG: write req bdf=01:00.0 off=0x4 len=1 val=0x6
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x4 local_bus=1 addr=0000000400100004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x4 local_bus=1 addr=0000000400100004
+QDMA DM PCI DBG: write done bdf=01:00.0 off=0x4 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x18 local_bus=0 addr=0000000400000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x18 local_bus=0 addr=0000000400000018
+QDMA DM PCI DBG: write req bdf=00:00.0 off=0x22 len=1 val=0xa800
+QDMA DM PCI DBG: write done bdf=00:00.0 off=0x22 ret=0
+QDMA DM PCI DBG: write req bdf=00:00.0 off=0x26 len=1 val=0xbff1
+QDMA DM PCI DBG: write done bdf=00:00.0 off=0x26 ret=0
+QDMA DM PCI DBG: of_to_plat STEP 1/7 enter dev=axi-pcie@90000000
+QDMA DM PCI: of_to_plat called for axi-pcie@90000000 (offset=20100)
+QDMA DM PCI DBG: of_to_plat STEP 2/7 read reg[0]
+QDMA DM PCI DBG: of_to_plat STEP 3/7 read reg[1]
+QDMA DM PCI DBG: of_to_plat STEP 4/7 map ECAM
+QDMA DM PCI DBG: of_to_plat STEP 5/7 set memory windows
+QDMA DM PCI DBG: of_to_plat STEP 6/7 values csr=0x90000000 ecam=0x440000000
+QDMA DM PCI: of_to_plat done - CSR=0x90000000 ECAM=0x440000000 (mapped=0000000440000000)
+QDMA DM PCI DBG: of_to_plat STEP 7/7 exit
+QDMA DM PCI DBG: probe STEP 1/7 enter dev=axi-pcie@90000000
+QDMA DM PCI: probe START - dev=axi-pcie@90000000 priv@000000007df6b890
+QDMA DM PCI: CSR=0x90000000 ECAM=0x440000000 NP=0xb0000000-0xbfffffff P=0xe0000000-0xfeffffff
+QDMA DM PCI DBG: probe STEP 2/7 check already-initialized
+QDMA DM PCI: already initialized, skipping init
+QDMA DM PCI DBG: probe STEP 3/7 init skipped
+QDMA DM PCI DBG: probe STEP 5/7 finalize host
+QDMA DM PCI DBG: probe host regions populated count=2
+QDMA DM PCI: host ready
+QDMA DM PCI DBG: probe STEP 6/7 host ready printed
+QDMA DM PCI DBG: probe STEP 7/7 exit
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x0 local_bus=0 addr=0000000440000000
+QDMA DM PCI DBG: read cfg bdf=02:00.0 off=0x0 len=1 ret=0 val=0x10ee
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x0 local_bus=0 addr=0000000440000000
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x4 local_bus=0 addr=0000000440000004
+QDMA DM PCI DBG: read cfg bdf=02:00.0 off=0x4 len=1 ret=0 val=0x147
+QDMA DM PCI DBG: write req bdf=02:00.0 off=0x10 len=2 val=0xffffffff
+QDMA DM PCI DBG: blocked write to root port offset 0x10 len 2
+QDMA DM PCI DBG: read quirk root-port BAR bdf=02:00.0 off=0x10 -> 0x0
+QDMA DM PCI DBG: write req bdf=02:00.0 off=0x14 len=2 val=0xffffffff
+QDMA DM PCI DBG: blocked write to root port offset 0x14 len 2
+QDMA DM PCI DBG: read quirk root-port BAR bdf=02:00.0 off=0x14 -> 0x0
+QDMA DM PCI DBG: write req bdf=02:00.0 off=0x4 len=1 val=0x144
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x4 local_bus=0 addr=0000000440000004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x4 local_bus=0 addr=0000000440000004
+QDMA DM PCI DBG: write done bdf=02:00.0 off=0x4 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x4 local_bus=0 addr=0000000440000004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x4 local_bus=0 addr=0000000440000004
+QDMA DM PCI DBG: read cfg bdf=02:00.0 off=0x4 len=1 ret=0 val=0x144
+QDMA DM PCI DBG: write req bdf=02:00.0 off=0x18 len=0 val=0x0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x18 local_bus=0 addr=0000000440000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x18 local_bus=0 addr=0000000440000018
+QDMA DM PCI DBG: write done bdf=02:00.0 off=0x18 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x18 local_bus=0 addr=0000000440000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x18 local_bus=0 addr=0000000440000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x18 local_bus=0 addr=0000000440000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x18 local_bus=0 addr=0000000440000018
+QDMA DM PCI DBG: write req bdf=02:00.0 off=0x20 len=1 val=0xb000
+QDMA DM PCI DBG: write done bdf=02:00.0 off=0x20 ret=0
+QDMA DM PCI DBG: write req bdf=02:00.0 off=0x24 len=1 val=0xe001
+QDMA DM PCI DBG: write done bdf=02:00.0 off=0x24 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x4 local_bus=0 addr=0000000440000004
+QDMA DM PCI DBG: write req bdf=02:00.0 off=0x4 len=1 val=0x146
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x4 local_bus=0 addr=0000000440000004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x4 local_bus=0 addr=0000000440000004
+QDMA DM PCI DBG: write done bdf=02:00.0 off=0x4 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x0 local_bus=1 addr=0000000440100000
+QDMA DM PCI DBG: read cfg bdf=03:00.0 off=0x0 len=1 ret=0 val=0x144d
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x0 local_bus=1 addr=0000000440100000
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:01.0 off=0x0 local_bus=1 addr=0000000440108000
+QDMA DM PCI DBG: read cfg bdf=03:01.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:02.0 off=0x0 local_bus=1 addr=0000000440110000
+QDMA DM PCI DBG: read cfg bdf=03:02.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:03.0 off=0x0 local_bus=1 addr=0000000440118000
+QDMA DM PCI DBG: read cfg bdf=03:03.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:04.0 off=0x0 local_bus=1 addr=0000000440120000
+QDMA DM PCI DBG: read cfg bdf=03:04.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:05.0 off=0x0 local_bus=1 addr=0000000440128000
+QDMA DM PCI DBG: read cfg bdf=03:05.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:06.0 off=0x0 local_bus=1 addr=0000000440130000
+QDMA DM PCI DBG: read cfg bdf=03:06.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:07.0 off=0x0 local_bus=1 addr=0000000440138000
+QDMA DM PCI DBG: read cfg bdf=03:07.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:08.0 off=0x0 local_bus=1 addr=0000000440140000
+QDMA DM PCI DBG: read cfg bdf=03:08.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:09.0 off=0x0 local_bus=1 addr=0000000440148000
+QDMA DM PCI DBG: read cfg bdf=03:09.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:0a.0 off=0x0 local_bus=1 addr=0000000440150000
+QDMA DM PCI DBG: read cfg bdf=03:0a.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:0b.0 off=0x0 local_bus=1 addr=0000000440158000
+QDMA DM PCI DBG: read cfg bdf=03:0b.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:0c.0 off=0x0 local_bus=1 addr=0000000440160000
+QDMA DM PCI DBG: read cfg bdf=03:0c.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:0d.0 off=0x0 local_bus=1 addr=0000000440168000
+QDMA DM PCI DBG: read cfg bdf=03:0d.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:0e.0 off=0x0 local_bus=1 addr=0000000440170000
+QDMA DM PCI DBG: read cfg bdf=03:0e.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:0f.0 off=0x0 local_bus=1 addr=0000000440178000
+QDMA DM PCI DBG: read cfg bdf=03:0f.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:10.0 off=0x0 local_bus=1 addr=0000000440180000
+QDMA DM PCI DBG: read cfg bdf=03:10.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:11.0 off=0x0 local_bus=1 addr=0000000440188000
+QDMA DM PCI DBG: read cfg bdf=03:11.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:12.0 off=0x0 local_bus=1 addr=0000000440190000
+QDMA DM PCI DBG: read cfg bdf=03:12.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:13.0 off=0x0 local_bus=1 addr=0000000440198000
+QDMA DM PCI DBG: read cfg bdf=03:13.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:14.0 off=0x0 local_bus=1 addr=00000004401a0000
+QDMA DM PCI DBG: read cfg bdf=03:14.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:15.0 off=0x0 local_bus=1 addr=00000004401a8000
+QDMA DM PCI DBG: read cfg bdf=03:15.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:16.0 off=0x0 local_bus=1 addr=00000004401b0000
+QDMA DM PCI DBG: read cfg bdf=03:16.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:17.0 off=0x0 local_bus=1 addr=00000004401b8000
+QDMA DM PCI DBG: read cfg bdf=03:17.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:18.0 off=0x0 local_bus=1 addr=00000004401c0000
+QDMA DM PCI DBG: read cfg bdf=03:18.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:19.0 off=0x0 local_bus=1 addr=00000004401c8000
+QDMA DM PCI DBG: read cfg bdf=03:19.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:1a.0 off=0x0 local_bus=1 addr=00000004401d0000
+QDMA DM PCI DBG: read cfg bdf=03:1a.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:1b.0 off=0x0 local_bus=1 addr=00000004401d8000
+QDMA DM PCI DBG: read cfg bdf=03:1b.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:1c.0 off=0x0 local_bus=1 addr=00000004401e0000
+QDMA DM PCI DBG: read cfg bdf=03:1c.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:1d.0 off=0x0 local_bus=1 addr=00000004401e8000
+QDMA DM PCI DBG: read cfg bdf=03:1d.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:1e.0 off=0x0 local_bus=1 addr=00000004401f0000
+QDMA DM PCI DBG: read cfg bdf=03:1e.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:1f.0 off=0x0 local_bus=1 addr=00000004401f8000
+QDMA DM PCI DBG: read cfg bdf=03:1f.0 off=0x0 len=1 ret=0 val=0xffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x4 local_bus=1 addr=0000000440100004
+QDMA DM PCI DBG: read cfg bdf=03:00.0 off=0x4 len=1 ret=0 val=0x0
+QDMA DM PCI DBG: write req bdf=03:00.0 off=0x10 len=2 val=0xffffffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x10 local_bus=1 addr=0000000440100010
+QDMA DM PCI DBG: write done bdf=03:00.0 off=0x10 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x10 local_bus=1 addr=0000000440100010
+QDMA DM PCI DBG: read cfg bdf=03:00.0 off=0x10 len=2 ret=0 val=0xffffc004
+QDMA DM PCI DBG: write req bdf=03:00.0 off=0x14 len=2 val=0xffffffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x14 local_bus=1 addr=0000000440100014
+QDMA DM PCI DBG: write done bdf=03:00.0 off=0x14 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x14 local_bus=1 addr=0000000440100014
+QDMA DM PCI DBG: read cfg bdf=03:00.0 off=0x14 len=2 ret=0 val=0xffffffff
+QDMA DM PCI DBG: write req bdf=03:00.0 off=0x10 len=2 val=0xb0000000
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x10 local_bus=1 addr=0000000440100010
+QDMA DM PCI DBG: write done bdf=03:00.0 off=0x10 ret=0
+QDMA DM PCI DBG: write req bdf=03:00.0 off=0x14 len=2 val=0x0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x14 local_bus=1 addr=0000000440100014
+QDMA DM PCI DBG: write done bdf=03:00.0 off=0x14 ret=0
+QDMA DM PCI DBG: write req bdf=03:00.0 off=0x18 len=2 val=0xffffffff
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x18 local_bus=1 addr=0000000440100018
+QDMA DM PCI DBG: write done bdf=03:00.0 off=0x18 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x18 local_bus=1 addr=0000000440100018
+QDMA DM PCI DBG: read cfg bdf=03:00.0 off=0x18 len=2 ret=0 val=0x0
+QDMA DM PCI DBG: write req bdf=03:00.0 off=0x20 len=2 val=0xffffffff
+QDMA DM PCI DBG: write done bdf=03:00.0 off=0x20 ret=0
+QDMA DM PCI DBG: write req bdf=03:00.0 off=0x24 len=2 val=0xffffffff
+QDMA DM PCI DBG: write done bdf=03:00.0 off=0x24 ret=0
+QDMA DM PCI DBG: write req bdf=03:00.0 off=0x4 len=1 val=0x6
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x4 local_bus=1 addr=0000000440100004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x4 local_bus=1 addr=0000000440100004
+QDMA DM PCI DBG: write done bdf=03:00.0 off=0x4 ret=0
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x18 local_bus=0 addr=0000000440000018
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x18 local_bus=0 addr=0000000440000018
+QDMA DM PCI DBG: write req bdf=02:00.0 off=0x22 len=1 val=0xb000
+QDMA DM PCI DBG: write done bdf=02:00.0 off=0x22 ret=0
+QDMA DM PCI DBG: write req bdf=02:00.0 off=0x26 len=1 val=0xdff1
+QDMA DM PCI DBG: write done bdf=02:00.0 off=0x26 ret=0
+Versal> pci
+BusDevFun  VendorId   DeviceId   Device Class       Sub-Class
+_____________________________________________________________
+00.00.00   QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x0 local_bus=0 addr=0000000400000000
+QDMA DM PCI DBG: read cfg bdf=00:00.0 off=0x0 len=1 ret=0 val=0x10ee
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=00:00.0 off=0x0 local_bus=0 addr=0000000400000000
+0x10ee     0xb0b4     Bridge device           0x04
+01.00.00   QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x0 local_bus=1 addr=0000000400100000
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x0 len=1 ret=0 val=0x144d
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x0 local_bus=1 addr=0000000400100000
+0x144d     0xa80a     Mass storage controller 0x08
+02.00.00   QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x0 local_bus=0 addr=0000000440000000
+QDMA DM PCI DBG: read cfg bdf=02:00.0 off=0x0 len=1 ret=0 val=0x10ee
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=02:00.0 off=0x0 local_bus=0 addr=0000000440000000
+0x10ee     0xb0b4     Bridge device           0x04
+03.00.00   QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x0 local_bus=1 addr=0000000440100000
+QDMA DM PCI DBG: read cfg bdf=03:00.0 off=0x0 len=1 ret=0 val=0x144d
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@90000000 bdf=03:00.0 off=0x0 local_bus=1 addr=0000000440100000
+0x144d     0xa80a     Mass storage controller 0x08
+Versal> nvme scan
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x4 local_bus=1 addr=0000000400100004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x10 local_bus=1 addr=0000000400100010
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x10 len=2 ret=0 val=0xa8000004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x4 local_bus=1 addr=0000000400100004
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x4 len=1 ret=0 val=0x6
+QDMA DM PCI DBG: write req bdf=01:00.0 off=0x4 len=1 val=0x6
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x4 local_bus=1 addr=0000000400100004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x4 local_bus=1 addr=0000000400100004
+QDMA DM PCI DBG: write done bdf=01:00.0 off=0x4 ret=0
+NVME DBG: UCLASS initially passed ndev->bar = 00000000a8000000
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x10 local_bus=1 addr=0000000400100010
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x10 len=2 ret=0 val=0xa8000004
+QDMA DM PCI DBG: cfg_addr dev=axi-pcie@80000000 bdf=01:00.0 off=0x14 local_bus=1 addr=0000000400100014
+QDMA DM PCI DBG: read cfg bdf=01:00.0 off=0x14 len=2 ret=0 val=0x0
+NVME DBG: BAR decode BAR0=0xa8000004 BAR1=0x00000000 phys=0xa8000000
+NVME DBG: MMU ATTR BAR range [0xa8000000..0xa80fffff] set to DCACHE_OFF
+NVME DBG: -> Attempting readl csts at BAR 00000000a8000000 ...
+"Error" handler, esr 0xbf000000
+elr: 000000000806aa58 lr : 000000000806aa50 (reloc)
+elr: 000000007ff17a58 lr : 000000007ff17a50
+x0 : 0000000000000000 x1 : 0000000000000000
+x2 : 000000007ff0f394 x3 : 0000000000000001
+x4 : 0000000000000000 x5 : 000000007de9d1a2
+x6 : 0000000000000030 x7 : 000000007de9da20
+x8 : 0000000000000000 x9 : 00000000ffffffd8
+x10: 0000000000000000 x11: 00000000a80ff000
+x12: 0000000000000003 x13: 000000007de9df10
+x14: 0000000000000010 x15: 000000007de9d1a2
+x16: 000000007ff0ee64 x17: 0000000000000000
+x18: 000000007dea4b70 x19: 000000007df6c3d0
+x20: 00000000a8000000 x21: 000000007df6b790
+x22: 0000000000000002 x23: 0000000000000002
+x24: 000000007ffc8e6c x25: 0000000000000000
+x26: 0000000000000000 x27: 0000000000000000
+x28: 000000007df6c2e0 x29: 000000007de9da20
+
+Code: 91055c00 94015201 f9402660 b9401c00 (d5033fbf) 
+Resetting CPU ...

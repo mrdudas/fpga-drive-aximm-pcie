@@ -1,0 +1,3 @@
+#! /bin/bash
+source /mnt/home/AMD/petalinux/settings.sh
+source /mnt/home/AMD/Vivado/2024.2/settings64.sh
