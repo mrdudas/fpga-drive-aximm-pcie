@@ -55,7 +55,15 @@
 #define PCIE_CFG_CAP_PTR_OFF           0x34        /* Capabilities pointer byte offset */
 #define PCIE_CAP_ID_PCI_EXP            0x10
 #define PCIE_CAP_LINK_CAP_OFF          0x0C
+#define PCIE_CAP_LINK_CONTROL_OFF      0x10
 #define PCIE_CAP_LINK_STATUS_OFF       0x12
+#define PCIE_CAP_LINK_CONTROL2_OFF     0x30
+
+#define PCIE_LINK_CONTROL_RETRAIN      0x0020
+#define PCIE_LINK_STATUS_SPEED_MASK    0x000f
+#define PCIE_LINK_STATUS_WIDTH_MASK    0x03f0
+#define PCIE_LINK_STATUS_TRAINING      0x0800
+#define PCIE_LINK_CONTROL2_SPEED_MASK  0x000f
 
 #define PCIE_CFG_PRIMARY_BUS_NUM       0x00
 #define PCIE_CFG_SECONDARY_BUS_NUM     0x01
@@ -142,6 +150,9 @@ static void qdma_setup_memory_apertures(struct qdma_pcie_instance *qdma);
 static void qdma_enable_bridge_access(struct qdma_pcie_instance *qdma);
 static void qdma_dump_root_port_cfg(struct qdma_pcie_instance *qdma,
                                       const char *tag);
+static void qdma_cfg_writel_guarded(struct qdma_pcie_instance *qdma,
+                                    u8 bus, u8 dev, u8 fn, u16 reg, u32 value);
+static int qdma_check_link(struct qdma_pcie_instance *qdma);
 static inline void qdma_write_reg(phys_addr_t base, u32 offset, u32 value);
 
 int qdma_resync_instance(phys_addr_t csr_base, phys_addr_t ecam_base,
@@ -207,6 +218,34 @@ static inline u8 qdma_cfg_readb(struct qdma_pcie_instance *qdma,
         shift = (byte_off & 0x3) * 8;
 
         return (u8)((dword >> shift) & 0xff);
+}
+
+static inline u16 qdma_cfg_readw(struct qdma_pcie_instance *qdma,
+                                 u8 bus, u8 dev, u8 fn, u16 byte_off)
+{
+        u32 dword;
+        u8 shift;
+
+        dword = qdma_cfg_readl(qdma, bus, dev, fn, byte_off >> 2);
+        shift = (byte_off & 0x2) * 8;
+
+        return (u16)((dword >> shift) & 0xffff);
+}
+
+static void qdma_cfg_writew(struct qdma_pcie_instance *qdma,
+                            u8 bus, u8 dev, u8 fn, u16 byte_off, u16 value)
+{
+        u16 reg = byte_off >> 2;
+        u32 dword;
+        u8 shift;
+        u32 mask;
+
+        dword = qdma_cfg_readl(qdma, bus, dev, fn, reg);
+        shift = (byte_off & 0x2) * 8;
+        mask = 0xffffu << shift;
+        dword = (dword & ~mask) | ((u32)value << shift);
+
+        qdma_cfg_writel_guarded(qdma, bus, dev, fn, reg, dword);
 }
 
 static int qdma_find_pcie_cap_off(struct qdma_pcie_instance *qdma,
@@ -280,6 +319,114 @@ static void qdma_print_root_link_info(struct qdma_pcie_instance *qdma)
 
         printf("QDMA: LINK UP, Gen%u x%u lanes (%.4s GT/s), max Gen%u x%u\n",
                speed, width, qdma_pcie_speed_to_str(speed), max_speed, max_width);
+}
+
+static int qdma_retrain_link(struct qdma_pcie_instance *qdma, u16 cap_off,
+                             ulong timeout_ms)
+{
+        ulong start_ms;
+        u16 lnkctl;
+
+        lnkctl = qdma_cfg_readw(qdma, 0, 0, 0, cap_off + PCIE_CAP_LINK_CONTROL_OFF);
+        lnkctl |= PCIE_LINK_CONTROL_RETRAIN;
+        qdma_cfg_writew(qdma, 0, 0, 0, cap_off + PCIE_CAP_LINK_CONTROL_OFF, lnkctl);
+
+        start_ms = get_timer(0);
+        while (get_timer(start_ms) < timeout_ms) {
+                u16 lnksta = qdma_cfg_readw(qdma, 0, 0, 0,
+                                            cap_off + PCIE_CAP_LINK_STATUS_OFF);
+                if (!(lnksta & PCIE_LINK_STATUS_TRAINING))
+                        return 0;
+                udelay(1000);
+        }
+
+        return -ETIMEDOUT;
+}
+
+static int qdma_set_target_gen(struct qdma_pcie_instance *qdma, u32 gen,
+                               int retrain, ulong timeout_ms)
+{
+        u16 cap_off;
+        u16 lnkctl2;
+        u16 lnksta;
+        int ret;
+
+        if (gen < 1 || gen > 5)
+                return -EINVAL;
+
+        ret = qdma_find_pcie_cap_off(qdma, 0, 0, 0, &cap_off);
+        if (ret)
+                return ret;
+
+        lnkctl2 = qdma_cfg_readw(qdma, 0, 0, 0, cap_off + PCIE_CAP_LINK_CONTROL2_OFF);
+        lnkctl2 &= ~PCIE_LINK_CONTROL2_SPEED_MASK;
+        lnkctl2 |= (u16)gen;
+        qdma_cfg_writew(qdma, 0, 0, 0, cap_off + PCIE_CAP_LINK_CONTROL2_OFF, lnkctl2);
+
+        printf("QDMA: set target link speed Gen%u on ECAM=0x%llx\n",
+               gen, qdma->ecam_base);
+
+        if (retrain) {
+                ret = qdma_retrain_link(qdma, cap_off, timeout_ms);
+                if (ret)
+                        return ret;
+        }
+
+        if (qdma_check_link(qdma))
+                return -ENOLINK;
+
+        lnksta = qdma_cfg_readw(qdma, 0, 0, 0, cap_off + PCIE_CAP_LINK_STATUS_OFF);
+        printf("QDMA: negotiated after update Gen%u x%u\n",
+               lnksta & PCIE_LINK_STATUS_SPEED_MASK,
+               (lnksta & PCIE_LINK_STATUS_WIDTH_MASK) >> 4);
+
+        return 0;
+}
+
+static int qdma_resync_hw_instance(struct qdma_pcie_instance *qdma)
+{
+        return qdma_resync_instance(qdma->csr_base, qdma->ecam_base,
+                                    qdma->np_mem_base, qdma->np_mem_max,
+                                    qdma->p_mem_base, qdma->p_mem_max);
+}
+
+static int qdma_apply_link_cmd_one(struct qdma_pcie_instance *qdma,
+                                   const char *mode, u32 val, ulong timeout_ms)
+{
+        int ret;
+
+        if (!strcmp(mode, "gen")) {
+                ret = qdma_set_target_gen(qdma, val, 1, timeout_ms);
+                if (ret)
+                        return ret;
+        } else if (!strcmp(mode, "eq")) {
+                u16 cap_off;
+
+                ret = qdma_find_pcie_cap_off(qdma, 0, 0, 0, &cap_off);
+                if (ret)
+                        return ret;
+
+                ret = qdma_retrain_link(qdma, cap_off, timeout_ms);
+                if (ret)
+                        return ret;
+
+                if (qdma_check_link(qdma))
+                        return -ENOLINK;
+
+                printf("QDMA: EQ/retrain done on ECAM=0x%llx\n", qdma->ecam_base);
+                qdma_print_root_link_info(qdma);
+        } else {
+                return -EINVAL;
+        }
+
+        ret = qdma_resync_hw_instance(qdma);
+        if (ret)
+                return ret;
+
+        printf("QDMA: instance reinitialized after link update (CSR=0x%llx)\n",
+               qdma->csr_base);
+
+        return 0;
 }
 
 static bool qdma_is_disabled_cfg_write_reg(u16 reg)
@@ -998,6 +1145,81 @@ static int do_pcie_qdma_scan(struct cmd_tbl *cmdtp, int flag, int argc,
         return CMD_RET_SUCCESS;
 }
 
+static int do_pcie_qdma_link(struct cmd_tbl *cmdtp, int flag, int argc,
+                             char *const argv[])
+{
+        int i;
+        int updated = 0;
+        int target_inst = -1;
+        u32 gen = 0;
+        ulong timeout_ms = 200;
+
+        if (argc < 3 || argc > 5) {
+                printf("Usage: pcie_qdma_link <inst|all> <gen|eq|show> [gen] [timeout_ms]\n");
+                return CMD_RET_USAGE;
+        }
+
+        if (strcmp(argv[1], "all"))
+                target_inst = simple_strtoul(argv[1], NULL, 0);
+
+        if (!strcmp(argv[2], "gen")) {
+                if (argc < 4) {
+                        printf("Usage: pcie_qdma_link <inst|all> gen <1..5> [timeout_ms]\n");
+                        return CMD_RET_USAGE;
+                }
+
+                gen = simple_strtoul(argv[3], NULL, 0);
+                if (argc == 5)
+                        timeout_ms = simple_strtoul(argv[4], NULL, 0);
+        } else if (!strcmp(argv[2], "eq")) {
+                if (argc >= 4)
+                        timeout_ms = simple_strtoul(argv[3], NULL, 0);
+        } else if (strcmp(argv[2], "show")) {
+                printf("Usage: pcie_qdma_link <inst|all> <gen|eq|show> [args]\n");
+                return CMD_RET_USAGE;
+        }
+
+        if (!num_qdma_instances) {
+                printf("QDMA: Not initialized, run pcie_qdma_init first\n");
+                return CMD_RET_FAILURE;
+        }
+
+        for (i = 0; i < num_qdma_instances; i++) {
+                struct qdma_pcie_instance *qdma = &qdma_instances[i];
+                int ret;
+
+                if (!qdma->initialized)
+                        continue;
+                if (target_inst >= 0 && i != target_inst)
+                        continue;
+
+                if (!strcmp(argv[2], "show")) {
+                        printf("QDMA: instance %d link status:\n", i);
+                        qdma_print_root_link_info(qdma);
+                        updated++;
+                        continue;
+                }
+
+                ret = qdma_apply_link_cmd_one(qdma, argv[2], gen, timeout_ms);
+                if (ret) {
+                        printf("QDMA: link command failed on instance %d (%d)\n", i, ret);
+                        return CMD_RET_FAILURE;
+                }
+
+                updated++;
+        }
+
+        if (!updated) {
+                if (target_inst >= 0)
+                        printf("QDMA: instance %d not available/initialized\n", target_inst);
+                else
+                        printf("QDMA: no initialized instance matched\n");
+                return CMD_RET_FAILURE;
+        }
+
+        return CMD_RET_SUCCESS;
+}
+
 U_BOOT_CMD(
         pcie_qdma_init, 2, 1, do_pcie_qdma_init,
         "Initialize QDMA PCIe Root Complex",
@@ -1008,6 +1230,14 @@ U_BOOT_CMD(
         pcie_qdma_scan, 3, 1, do_pcie_qdma_scan,
         "Enumerate PCIe functions via QDMA ECAM",
         "[max_bus] [timeout_ms] - scan buses 0..max_bus (default: 255), timeout default: 1000ms"
+);
+
+U_BOOT_CMD(
+        pcie_qdma_link, 5, 1, do_pcie_qdma_link,
+        "QDMA PCIe link tuning (Gen/EQ/retrain)",
+        "<inst|all> show\n"
+        "pcie_qdma_link <inst|all> gen <1..5> [timeout_ms]\n"
+        "pcie_qdma_link <inst|all> eq [timeout_ms]"
 );
 
 #endif /* CONFIG_CMD_PCI */
